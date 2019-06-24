@@ -6,6 +6,12 @@
         Administrators / Authors
     @endcomponent
 
+    @if(Session::has('flash_admin'))
+        <div class="flash_message">
+            {{ Session('flash_admin') }}
+        </div>
+    @endif
+
     <table class="table table-striped admin_users_table">
         <thead>
             <tr>

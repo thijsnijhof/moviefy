@@ -147,6 +147,16 @@
     {{-- BOOTSTRAP --}}
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('.flash_message').slideDown('slow');
+
+            setTimeout(function(){
+                $('.flash_message').slideUp('slow');
+            },5000)
+        })
+    </script>
+
 </body>
 
 </html>
