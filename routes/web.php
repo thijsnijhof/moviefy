@@ -13,9 +13,17 @@
 
 Auth::routes();
 
-Route::get('/admin', 'AdminController@index')->name('admin');
-Route::resources(['/admin/posts' => 'AdminPostsController']);
-Route::resources(['/admin/users' => 'AdminUsersController']);
+// Check if user is active so they can enter the Posts section
+Route::group(['middleware' => ['activeUser']], function(){
+    Route::get('/admin', 'AdminController@index')->name('admin');
+    Route::resources(['/admin/posts' => 'AdminPostsController']);
+});
+
+// Use the middleware checking if user isAdmin or not and isActive or not
+// Use it on the entire admin route
+Route::group(['middleware' => ['activeUser','admin']], function(){
+    Route::resources(['admin/users' => 'AdminUsersController']);
+});
 
 
 Route::get('/', 'HomeController@index')->name('home');

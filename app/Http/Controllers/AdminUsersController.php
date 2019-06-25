@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\User;
+use App\Role;
+use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\EditUserRequest;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -17,7 +22,8 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -27,7 +33,9 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -36,9 +44,16 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddUserRequest $request)
     {
-        //
+        $user = $request->all();
+        // HASH the PW
+        $user['password'] = bcrypt(trim($request->password));
+
+        User::create($user);
+        Session::flash('flash_admin', 'The user has been created');
+
+        return redirect('/admin/users');
     }
 
     /**
@@ -60,7 +75,10 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = Role::all();
+
+        return view('admin.users.edit', compact('roles', 'user'));
     }
 
     /**
@@ -70,9 +88,24 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $input = $request->all();
+
+        // form sends entire form
+        // check if pw is empty, if it is dont send pw
+
+        if (empty(trim($request->password))) {
+            $input = $request->except('password');
+        } else {
+            $input['password'] = bcrypt($request->password);
+        }
+        $user->update($input);
+
+        Session::flash('flash_admin', 'The user has been edited');
+
+        return redirect('/admin/users');
     }
 
     /**

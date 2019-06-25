@@ -32,7 +32,7 @@
         <!-- ============================================================== -->
         <div class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
-                <a class="navbar-brand" href="index.html">MovDb</a>
+                <a class="navbar-brand" href="index.html">Moviefy</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -98,7 +98,7 @@
                                 <a class="nav-link" href="{{ url('admin/categories') }}"><i class="fas fa-fw fa-table"></i>Categories</a>
                             </li>
 
-
+                            @if (Auth::user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                                     data-target="#submenu-5" aria-controls="submenu-5">
@@ -114,10 +114,13 @@
                                     </ul>
                                 </div>
                             </li>
+                            @endif
 
+                            @if (Auth::user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('admin/site') }}"><i class="fa fa-fw fa-rocket"></i>Site</a>
                             </li>
+                            @endif
 
                         </ul>
                     </div>
@@ -146,6 +149,16 @@
     <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
     {{-- BOOTSTRAP --}}
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.flash_message').slideDown('slow');
+
+            setTimeout(function(){
+                $('.flash_message').slideUp('slow');
+            },5000)
+        })
+    </script>
 
 </body>
 

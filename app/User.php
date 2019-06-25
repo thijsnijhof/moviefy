@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'activate', 'role_id'
     ];
 
     /**
@@ -27,4 +27,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role(){
+        return $this->belongsTo('App\Role');
+    }
+
+    // check whether user is an administrator or not, to use in the middelware
+    // Admin and ActiveUser middleware, added to Kernel
+    public function isAdmin(){
+        if($this->role->name == "administrator"){
+            return true;
+        } 
+        return false;
+    }
 }
