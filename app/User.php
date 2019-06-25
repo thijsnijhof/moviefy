@@ -31,4 +31,13 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo('App\Role');
     }
+
+    // check whether user is an administrator or not, to use in the middelware
+    // Admin and ActiveUser middleware, added to Kernel
+    public function isAdmin(){
+        if($this->role->name == "administrator"){
+            return true;
+        } 
+        return false;
+    }
 }
