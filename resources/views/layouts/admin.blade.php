@@ -10,6 +10,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 
@@ -146,7 +148,6 @@
     </div>
 
     {{-- JQUERY --}}
-    <script src="{{ asset('vendor/jquery/jquery-3.3.1.min.js') }}"></script>
     {{-- BOOTSTRAP --}}
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
 
