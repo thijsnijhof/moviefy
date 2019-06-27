@@ -7,7 +7,7 @@
     @foreach ($posts as $post)
     <div>
         <div class="slick-item" style="background:url(/images/posts/{{ $post->photo['filename']}})">
-            <a href="{{ url('/post/'.$post->id) }}" class="slick-wrapper">
+            <a href="{{ url('/post/'.$post->slug) }}" class="slick-wrapper">
                 <div class="slick-content">
                     <div class="wrapper">
                         <div class="slick-movie">{{ $post->name }}</div>
@@ -50,7 +50,7 @@
                             <div class="category">{{ $postOther->category->name }}</div>
                             <div class="name">{{ $postOther->name }}</div>
                             <div class="text_wrapper">
-                                <a href="{{ url('/posts/'.$postOther->id) }}" class="title">
+                                <a href="{{ url('/post/'.$postOther->slug) }}" class="title">
                                     {{ $postOther->title }}
                                 </a>
                                 <div class="desc">

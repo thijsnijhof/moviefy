@@ -13,8 +13,16 @@ Reviews list
 @endif
 
 @include('admin.includes.searchForm')
-@include('admin.includes.postList')
 
-{{ $posts->links()}}
+<a href="{{ url('/admin/posts') }}">See all posts</a>
+
+@if ($posts)
+<div class="count">We found <strong>{{ count($posts) }}</strong></div>
+    @include('admin.includes.postList')
+
+@else
+    <div>Sorry, no reviews found!</div>
+@endif
+
 
 @endsection
