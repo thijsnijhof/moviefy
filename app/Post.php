@@ -5,11 +5,14 @@ namespace App;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use CyrildeWit\EloquentViewable\Viewable;
+use CyrildeWit\EloquentViewable\Contracts\Viewable as ViewableContract;
 
-class Post extends Model
+class Post extends Model implements ViewableContract
 {
     use Sluggable;
     use SluggableScopeHelpers;
+    use Viewable;
 
     protected $fillable = [
         'user_id', 'category_id', 'photo_id', 'name', 'review','title','description'

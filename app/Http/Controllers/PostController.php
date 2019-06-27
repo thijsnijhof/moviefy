@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use CyrildeWit\EloquentViewable\Support\Period;
 
 class PostController extends Controller
 {
@@ -47,6 +48,14 @@ class PostController extends Controller
     public function show($slug)
     {
        $post = Post::findBySlugOrFail($slug);
+        // $post->increment('views');
+        // Viewables
+        // https://github.com/cyrildewit/eloquent-viewable
+        views($post)->record();
+
+        // $count = views($post)->count();
+        // $count = views($post)->period(Period::pastWeeks(1))->count();
+
 
        return view('posts.index', compact('post'));
     }

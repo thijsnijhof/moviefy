@@ -26,6 +26,7 @@ class HomeController extends Controller
     {
         $posts = Post::orderBy('id','desc')->take(8)->get();
         $postsOther = Post::orderBy('id', 'desc')->take(15)->skip(4)->get();
-        return view('home', compact('posts', 'postsOther'));
+        $topPosts = Post::orderByViews()->take(10)->get();
+        return view('home', compact('posts', 'postsOther', 'topPosts'));
     }
 }
