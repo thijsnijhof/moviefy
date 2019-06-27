@@ -24,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::take(8)->get();
-        return view('home', compact('posts'));
+        $posts = Post::orderBy('id','desc')->take(8)->get();
+        $postsOther = Post::orderBy('id', 'desc')->take(15)->skip(4)->get();
+        return view('home', compact('posts', 'postsOther'));
     }
 }
