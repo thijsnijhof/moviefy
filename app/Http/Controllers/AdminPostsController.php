@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\Photo;
+use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\CreatePostRequest;
 
 class AdminPostsController extends Controller
 {
@@ -17,7 +23,9 @@ class AdminPostsController extends Controller
      */
     public function index()
     {
-        return view('admin.posts.index');
+        $posts = Post::orderBy('id', 'desc')->paginate(7);
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -27,7 +35,9 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -36,9 +46,28 @@ class AdminPostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        //
+        /* TODO:  validate */
+        $input = $request->all();
+
+        // check for the file
+        if($file = $request->file('file')){
+            // create the name by merging it with timestamp
+            $name = time().$file->getClientOriginalName();
+            // move the file somewhere on the server
+            $file->move('images/posts', $name);
+            // store image in db
+            $image =  Photo::create(['filename' => $name]);
+
+            $input['photo_id'] = $image->id;
+        }
+
+        $input['user_id'] = Auth::user()->id;
+        Post::create($input);
+        Session::flash('flash_admin', 'The review has been created');
+
+        return redirect('admin/posts');
     }
 
     /**
@@ -60,7 +89,10 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -72,7 +104,26 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    //    SUbmit edit updates
+        $post = Post::findOrFail($id);
+        $input = $request->all();
+
+        // check for the file
+        if($file = $request->file('file')){
+            // create the name by merging it with timestamp
+            $name = time().$file->getClientOriginalName();
+            // move the file somewhere on the server
+            $file->move('images/posts', $name);
+            // store image in db
+            $image =  Photo::create(['filename' => $name]);
+
+            $input['photo_id'] = $image->id;
+        }
+
+        $post->update($input);
+        Session::flash('flash_admin', 'The review has been edited');
+
+        return redirect('admin/posts');
     }
 
     /**
@@ -83,6 +134,9 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::findOrFail($id)->delete();
+        Session::flash('flash_admin', 'The review has been deleted');
+
+        return redirect('admin/posts');
     }
 }
