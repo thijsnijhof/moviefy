@@ -17,6 +17,7 @@ Auth::routes();
 Route::group(['middleware' => ['activeUser']], function(){
     Route::get('/admin', 'AdminController@index')->name('admin');
     Route::resources(['/admin/posts' => 'AdminPostsController']);
+    Route::resources(['admin/categories' => 'AdminCategoriesController']);
 });
 
 // Use the middleware checking if user isAdmin or not and isActive or not

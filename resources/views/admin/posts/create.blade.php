@@ -24,32 +24,39 @@
 
             <div class="col-sm-9">
                 <div class="form-group">
-                    <div class="form-group">
-                        <label for="name">Title</label>
-                        <input type="text" class="form-control" name="name" placeholder="Enter a title">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category_id">Category</label>
-                        <select name="category_id" class="form-control">
-                            <option disabled selected>Select a category</option>
-                            @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="review">Review</label>
-                        <textarea name="review" class="form-control" id="article-ckeditor" cols="30"
-                            rows="5"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Add Review</button>
+                    <label for="title">Review Title</label>
+                    <input type="text" class="form-control" name="title" placeholder="Enter a review title">
                 </div>
-                @component('admin.includes.formErrors')
-                @endcomponent
+
+                <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter a movie title">
+                </div>
+
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select name="category_id" class="form-control">
+                        <option disabled selected>Select a category</option>
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" cols="30" rows="2"></textarea>
+                    </div>
+
+                <div class="form-group">
+                    <label for="review">Review</label>
+                    <textarea name="review" class="form-control" id="article-ckeditor" cols="30" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Review</button>
             </div>
+            @component('admin.includes.formErrors')
+            @endcomponent
         </div>
 
 

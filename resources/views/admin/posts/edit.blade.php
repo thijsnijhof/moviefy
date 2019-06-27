@@ -35,39 +35,52 @@
 
             <div class="col-sm-9">
                 <div class="form-group">
-                    <div class="form-group">
-                        <label for="name">Title</label>
-                        <input type="text" class="form-control" name="name" placeholder="Enter a title" value="{{ $post->name }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category_id">Category</label>
-                        <select name="category_id" class="form-control">
-                            <option disabled selected>Select a category</option>
-                            @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" {{ $post->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="review">Review</label>
-                        <textarea name="review" class="form-control" id="article-ckeditor" cols="30"
-                            rows="5">
-                        {{ $post->review }}
-                        </textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Edit Review</button>
+                    <label for="name">Movie Title</label>
+                    <input type="text" class="form-control" name="title" value="{{ $post->title }}"
+                        placeholder="Enter a title" value="{{ $post->name }}">
                 </div>
-                @component('admin.includes.formErrors')
-                @endcomponent
+
+                <div class="form-group">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter a title"
+                        value="{{ $post->name }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select name="category_id" class="form-control">
+                        <option disabled selected>Select a category</option>
+                        @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ $post->category_id == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" value="{{ $post->description}}"
+                        id="article-ckeditor" cols="30" rows="5">
+                            {{ $post->description }}
+                            </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="review">Review</label>
+                    <textarea name="review" class="form-control" id="article-ckeditor" cols="30" rows="5">
+                        {{ $post->review }}
+                    </textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Edit Review</button>
             </div>
+            @component('admin.includes.formErrors')
+            @endcomponent
         </div>
     </form>
 
     @else
-        <div>Sorry, this review does not exist.</div>
+    <div>Sorry, this review does not exist.</div>
     @endif
 
 </div>
