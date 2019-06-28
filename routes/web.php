@@ -18,6 +18,9 @@ Route::group(['middleware' => ['activeUser']], function(){
     Route::get('/admin', 'AdminController@index')->name('admin');
     Route::resources(['/admin/posts' => 'AdminPostsController']);
     Route::resources(['admin/categories' => 'AdminCategoriesController']);
+
+    Route::post('/admin/posts/filter', 'AdminPostsController@filter');
+    Route::resources(['/admin/site' => 'AdminSiteController']);
 });
 
 // Use the middleware checking if user isAdmin or not and isActive or not
@@ -28,3 +31,4 @@ Route::group(['middleware' => ['activeUser','admin']], function(){
 
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/post/{id}', 'PostController@show')->name('post');
