@@ -54,7 +54,7 @@
                                     {{ $postOther->title }}
                                 </a>
                                 <div class="desc">
-                                    {{ str_limit($postOther->description, 250 )}}
+                                        {!!html_entity_decode(str_limit($post->review))!!}
                                     ...read more
                                 </div>
                             </div>
